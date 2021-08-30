@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import shortened_url
 import string
@@ -31,6 +32,9 @@ def saveurl(request):
     return HttpResponseRedirect(reverse('url_shortener:index'))
 
 def redir_to_long_url(request, code):
-    url_object = shortened_url.objects.get(code=code)
-    print(url_object.long_url)
-    return redirect(url_object.long_url)
+    try:
+        url_object = shortened_url.objects.get(code=code)
+        print(url_object.long_url)
+        return redirect(url_object.long_url)
+    except ObjectDoesNotExist:
+        return HttpResponse("The code does not exist!")
