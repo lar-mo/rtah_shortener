@@ -68,6 +68,9 @@
       /* table, tr, th, td {
         border: 1px solid #9C7;
       } */
+      #id_long_url {
+        width: 500px;
+      }
     </style>
   </head>
   <body>
@@ -77,8 +80,9 @@
         <form action="{% url 'url_shortener:saveurl' %}" method="post" id="url_form">
           {% csrf_token %}
           <div id="shorten_long_url_form">
-            <input class="w3-input" type="url" style="width:500px" id="long_url_field" name="long_url" required />
+            <!-- <input class="w3-input" type="url" style="width:500px" id="long_url_field" name="long_url" required /> -->
             <!-- <input class="w3-input" type="text" style="width:500px" id="long_url_field" name="long_url" required pattern="^(http|https):\/\/.*" title="URL should start with http:// or https://"/> -->
+            {{ form }}
             <input type="submit" class="w3-btn w3-black" value="Save" id="submit_button"/>
           </div>
         </form>
