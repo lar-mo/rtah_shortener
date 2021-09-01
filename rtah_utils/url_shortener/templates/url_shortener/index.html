@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL shortener</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="shortcut icon" href="https://lar-mo.com/images/lar-mo_favicon.png" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style media="screen" type="text/css">
       html, body {
         box-sizing: border-box;
@@ -107,5 +109,13 @@
         <p>No URLs are available.</p>
       {% endif %}
     </div> <!-- end of 'container'-->
+    <script type="text/javascript">
+      $('.captcha').click(function () {
+        $.getJSON("/captcha/refresh/?"+Math.random(), function (result) {
+            $('.captcha').attr('src', result['image_url']);
+            $('#id_captcha_0').val(result['key'])
+        });
+      });
+    </script>
   </body>
 </html>
