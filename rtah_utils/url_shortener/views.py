@@ -42,7 +42,6 @@ def saveurl(request):
 def redir_to_long_url(request, code):
     try:
         url_object = shortened_url.objects.get(code=code)
-        print(url_object.long_url)
         return redirect(url_object.long_url)
     except ObjectDoesNotExist:
         return HttpResponse("The code does not exist!")
