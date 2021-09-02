@@ -17,7 +17,8 @@
         width: 100%;
       }
       #container {
-        background-color: rgba(141, 201, 0, 0.5);
+        /* background-color: rgba(141, 201, 0, 0.5); */
+        background-image: url(https://www.roadtripsandhikes.org/images/IMG_3348.JPG);
         height: 100%;
         width: 100%;
         display: flex;
@@ -30,10 +31,11 @@
         text-align: center;
       }
       #container > div {
-        background-color: rgba(101, 222, 0, 0.9);
+        /* background-color: rgba(101, 222, 0, 0.9); */
+        background-image: url(https://www.roadtripsandhikes.org/images/IMG_3348.JPG);
         width: 100%;
         margin: 0;
-        padding: 20px 40px 40px;
+        padding: 10px 40px 40px;
       }
       h2 {
         margin-bottom: 0;
@@ -48,14 +50,23 @@
       #shorten_long_url_form > input {
         margin: 10px;
       }
-      #td-long {
+      table {
+        border-collapse: collapse;
+      }
+      .middle_cell {
+        padding: 0 15px;
+      }
+      #td_long {
         width: 600px;
         max-width: 600px;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-align: right
+        text-align: right;
+        white-space: nowrap;
+        overflow: scroll;
+        padding: 5px 0 5px 15px;
       }
-      #td-short {
+      #td_short {
          width: 600px;
       }
       th {
@@ -65,7 +76,10 @@
         text-align: right;
       }
       tr:nth-child(odd){
-        background-color: rgba(216, 251, 208, 0.8);
+        background-color: rgba(108, 153, 204, 0.8);
+      }
+      tr:nth-child(even){
+        background-color: rgba(255, 255, 255, 0.8);
       }
       #id_long_url {
         width: 500px;
@@ -91,14 +105,14 @@
         <table>
           <tr align="right">
             <th>Long URL</th>
-            <th>&#8594;</th>
+            <th class="middle_cell">&#8594;</th>
             <th>Shortcode</th>
           </tr>
           {% for url in shortened_urls %}
           <tr>
-            <td id="td-long">{{url.long_url}}</td>
-            <td><b>&#8594;</b></td>
-            <td id="td-short"><a href="{{url.code}}/" target="_blank">{{url.code}}</a></td>
+            <td id="td_long">{{url.long_url}}</td>
+            <td class="middle_cell">&#8594;</td>
+            <td id="td_short"><a href="{{url.code}}/" target="_blank">{{url.code}}</a></td>
           </tr>
           {% endfor %}
         </table>
