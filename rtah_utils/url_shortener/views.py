@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from captcha.fields import CaptchaField
+from django.contrib.auth.decorators import login_required
 
 from .models import shortened_url
 from .forms import ShortcodeForm
