@@ -8,6 +8,7 @@ from .forms import ShortcodeForm
 import string
 import random
 
+
 def index(request):
     shortened_urls = shortened_url.objects.order_by('-id')
     captcha = CaptchaField()
@@ -15,6 +16,7 @@ def index(request):
     context = {'shortened_urls': shortened_urls, 'captcha': captcha, 'form': form}
     return render(request, 'url_shortener/index.html', context)
 
+@login_required
 def saveurl(request):
     # get the characters to choose from from string()
     letters = string.ascii_letters      # UPPER and lower case letters, a-Z
