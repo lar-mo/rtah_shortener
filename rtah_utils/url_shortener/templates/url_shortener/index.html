@@ -127,6 +127,16 @@
             $('#id_captcha_0').val(result['key'])
         });
       });
+
+      let submit_button = document.querySelector('#submit_button');
+      let is_authorized = "{{user.is_authenticated}}";
+      submit_button.onclick = function(event) {
+        if (is_authorized == "False") {
+          alert("This service is only available to registered users.")
+          event.preventDefault();
+          $("form")[0].reset();
+        }
+      }
     </script>
   </body>
 </html>
