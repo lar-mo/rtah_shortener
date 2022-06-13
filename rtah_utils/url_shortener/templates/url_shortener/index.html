@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Road Trips & Hikes - URL shortener</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Road Trips & Hikes - Larry Moiola</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://www.roadtripshandhikes.org/js/header-anim.js?20210811"></script>
+    <script src="https://www.roadtripshandhikes.org/js/header-resizer.js?20210807"></script>
+    <meta property="og:image" content="https://www.lar-mo.com/images/lar-mo-git-io-bg.jpg" />
+    <meta property="og:description" content="Road Trips + Hikes" />
+    <meta property="og:url" content="https://www.roadtripsandhikes.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Larry Moiola's road tripping + hiking portal" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="https://lar-mo.com/images/lar-mo_favicon.png" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preload" as="image" href="https://lar-mo.com/images/lar-mo_favicon_bw.png">
+    <!-- <link rel="stylesheet" href="https://www.roadtripshandhikes.org/css/styles.css?20210812"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" />
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <style media="screen" type="text/css">
       html, body {
         box-sizing: border-box;
-        height: 100%;
+        font-family: 'Georama', sans-serif;
         margin: 0;
         min-height: 100%;
+        height: 100%;
         padding: 0;
         width: 100%;
+        scroll-behavior: smooth;
       }
       #container {
         background-image: url(https://1.bp.blogspot.com/-KlxHmaOF5eo/YUe0MV9x0kI/AAAAAAAAhV0/FDYkG5UdUsQs9mdaQXXpfotr-ckBEufHgCLcBGAsYHQ/s2048/IMG_4807%2B2.JPG);
@@ -29,16 +46,29 @@
       h1 {
         margin: 0;
         text-align: center;
-      }
-      #container > div {
-        background-image: url(https://1.bp.blogspot.com/-KlxHmaOF5eo/YUe0MV9x0kI/AAAAAAAAhV0/FDYkG5UdUsQs9mdaQXXpfotr-ckBEufHgCLcBGAsYHQ/s2048/IMG_4807%2B2.JPG);
-        background-size: cover;
-        width: 100%;
-        margin: 0;
-        padding-bottom: 40px;
+        color: #F9F9F9;
+        font-size: 1.7em;
       }
       h2 {
-        margin-bottom: 0;
+        margin-top: 20px;
+        text-align: center;
+        color: #F9F9F9;
+      }
+      #container > div {
+        /* background-image: url(https://1.bp.blogspot.com/-KlxHmaOF5eo/YUe0MV9x0kI/AAAAAAAAhV0/FDYkG5UdUsQs9mdaQXXpfotr-ckBEufHgCLcBGAsYHQ/s2048/IMG_4807%2B2.JPG); */
+        background-size: cover;
+        width: 100%;
+        margin-top: 40px;
+        padding-bottom: 40px;
+      }
+      h3 {
+        color: #111;
+        margin-top: 20px;
+        padding: 0 15px 15px;
+      }
+      #title {
+        font-weight: 700;
+        color: #FFF;
       }
       #shorten_long_url_form {
         display: flex;
@@ -84,23 +114,50 @@
       #id_long_url {
         width: 500px;
       }
+      header {
+        background-color: rgba(128, 128, 128, 0.0);
+        color: #F9F9F9;
+        top: 0;
+        position: fixed;
+        width: 100%;
+        padding: 19px;
+        transition: 0.25s;
+        z-index: 3;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+      .header_links {
+        text-decoration: none;
+      }
+      #logo {
+        width: 50px;
+        padding-right: 15px;
+        transition: 0.35s;
+      }
     </style>
   </head>
   <body>
+    <header>
+      <img id="logo" src="https://lar-mo.com/images/lar-mo_favicon.png" />
+      <h1>
+        <a href="#top" id="title" class="header_links">Road Trips & Hikes</a>
+      </h1>
+    </header>
     <div id="container">
       <div>
-        <h1>Generate a new shortcode</h1>
+        <h2>Generate a new shortcode</h2>
         <form action="{% url 'url_shortener:saveurl' %}" method="post" id="url_form">
           {% csrf_token %}
           <div id="shorten_long_url_form">
             <!-- <input class="w3-input" type="url" style="width:500px" id="long_url_field" name="long_url" required /> -->
             <!-- <input class="w3-input" type="text" style="width:500px" id="long_url_field" name="long_url" required pattern="^(http|https):\/\/.*" title="URL should start with http:// or https://"/> -->
             {{ form }}
-            <input type="submit" class="w3-btn w3-black" value="Save" id="submit_button"/>
+            <input type="submit" class="w3-button w3-black w3-round" value="Save" id="submit_button"/>
           </div>
         </form>
       </div>
-      <h2>All Shortened Links</h2>
+      <h3>All Shortened Links</h3>
       {% if shortened_urls %}
         <table>
           <tr align="right">
