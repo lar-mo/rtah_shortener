@@ -43,12 +43,12 @@ def saveurl(request):
     return HttpResponseRedirect(reverse('url_shortener:index'))
 
 def redir_to_long_url(request, code):
-    year = request.GET.get('year', '')
+    y = request.GET.get('y', '') # y=year
     try:
         url_object = shortened_url.objects.get(code=code)
         if code == 'h':
-            if year:
-                return redirect(url_object.long_url + "?" + year + "&" + "full")
+            if y:
+                return redirect(url_object.long_url + "?" + y + "&" + "full")
         return redirect(url_object.long_url)
     except ObjectDoesNotExist:
         return HttpResponse("The code does not exist!")
