@@ -13,7 +13,7 @@ import random
 
 def index(request):
     all_shortened_urls = shortened_url.objects.order_by('-id')
-    paginator = Paginator(all_shortened_urls, 5)
+    paginator = Paginator(all_shortened_urls, 10)
     page_number = request.GET.get('page')
     shortened_urls = paginator.get_page(page_number)
     captcha = CaptchaField()
