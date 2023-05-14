@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from captcha.fields import CaptchaField
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 from .models import shortened_url
 from .forms import ShortcodeForm
@@ -11,7 +12,10 @@ import random
 
 
 def index(request):
-    shortened_urls = shortened_url.objects.order_by('-id')
+    all_shortened_urls = shortened_url.objects.order_by('-id')
+    paginator = Paginator(all_shortened_urls, 5)
+    page_number = request.GET.get('page')
+    shortened_urls = paginator.get_page(page_number)
     captcha = CaptchaField()
     form = ShortcodeForm()
     context = {'shortened_urls': shortened_urls, 'captcha': captcha, 'form': form}
