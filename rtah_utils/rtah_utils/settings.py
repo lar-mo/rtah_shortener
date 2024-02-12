@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import json
 import os
+import secrets
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
