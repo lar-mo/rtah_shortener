@@ -1,1 +1,1 @@
-web: gunicorn rtah_utils.wsgi
+web: gunicorn rtah-shortener:app
