@@ -1,1 +1,1 @@
-web: gunicorn rtah_utils.wsgi 
+web: gunicorn intense-tor-23596:app
