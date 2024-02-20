@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import json
 import os
+import pymysql
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,25 +42,27 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 #
-ALLOWED_HOSTS = ['localhost','rtah.xyz','www.rtah.xyz']
-
+ALLOWED_HOSTS = ['localhost','rtah.xyz','www.rtah.xyz','test.rtah.xyz']
+CSRF_TRUSTED_ORIGINS = ['https://rtah.xyz', 'https://test.rtah.xyz']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'url_shortener',
+    'captcha',
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'url_shortener',
-    'captcha'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,22 +95,22 @@ WSGI_APPLICATION = 'rtah_utils.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    #}
     # DREAMHOST CONFIG
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'OPTIONS': {
-    #       'sql_mode': 'STRICT_ALL_TABLES',
-    #     },
-    #     'NAME': get_secret('MYSQL_DB'),
-    #     'HOST': get_secret('MYSQL_HOST'),
-    #     'PORT': '3306',
-    #     'USER': get_secret('MYSQL_USER'),
-    #     'PASSWORD': get_secret('MYSQL_PWD')
-    # }
+     'default': {
+         'ENGINE': 'django.db.backends.mysql',
+         'OPTIONS': {
+           'sql_mode': 'STRICT_ALL_TABLES',
+         },
+         'NAME': get_secret('MYSQL_DB'),
+         'HOST': get_secret('MYSQL_HOST'),
+         'PORT': '3306',
+         'USER': get_secret('MYSQL_USER'),
+         'PASSWORD': get_secret('MYSQL_PWD')
+     }
 }
 
 
@@ -145,13 +150,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_URL = "static/"
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-# STATIC_URL = '/static/' #old declaration (Dreamhost)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
